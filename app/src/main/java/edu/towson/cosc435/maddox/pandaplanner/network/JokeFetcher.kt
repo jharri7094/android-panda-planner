@@ -10,7 +10,7 @@ import okhttp3.OkHttpClient
 import okhttp3.Request
 
 class JokeFetcher : IJokeFetcher {
-    override suspend fun fetchJokes() : Joke {
+    override suspend fun fetchJoke() : Joke {
         return withContext(Dispatchers.IO){
             val client = OkHttpClient()
 
