@@ -5,7 +5,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.ExperimentalFoundationApi
 import edu.towson.cosc435.maddox.pandaplanner.ui.theme.PandaPlannerTheme
-import edu.towson.cosc435.maddox.pandaplanner.ui.screens.home.Home
+import edu.towson.cosc435.maddox.pandaplanner.ui.screens.welcome.Welcome
 
 class MainActivity : ComponentActivity() {
     @ExperimentalFoundationApi
@@ -13,7 +13,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             PandaPlannerTheme {
-                    Home()
+                    Welcome()
             }
         }
     }

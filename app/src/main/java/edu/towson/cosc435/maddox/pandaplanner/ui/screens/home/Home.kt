@@ -11,7 +11,7 @@ import edu.towson.cosc435.maddox.pandaplanner.model.Event
 @ExperimentalFoundationApi
 @Composable
 fun Home(){
-    val vm = HomeViewModel()
+    val vm : HomeViewModel by viewModel()
     val events by vm.events
     val selectedEvent by vm.selectedEvent
     EventListView(
@@ -19,7 +19,6 @@ fun Home(){
         selectedEvent,
         onDelete=vm::deleteEvent,
         onToggle=vm::toggleCompleted,
-        //onFilter=vm::filter,
         onSelectEvent=vm::selectEvent,
         onAddEvent={
             val event = Event("COSC 435", "12pm - 12am", "dummy task", false, 3)

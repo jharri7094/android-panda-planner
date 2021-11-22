@@ -6,14 +6,14 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.focus.focusModifier
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewmodel.compose.viewModel
 
 @Composable
 fun Welcome(){
-    val vm = WelcomeViewModel()
+    val vm : WelcomeViewModel by viewModel()
     val randomMessage1 = vm.randomMessage1
     val randomMessage2 = vm.randomMessage2
 
