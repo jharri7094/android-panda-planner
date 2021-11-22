@@ -4,41 +4,44 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
+import edu.towson.cosc435.maddox.pandaplanner.data.EventsRepository
+import edu.towson.cosc435.maddox.pandaplanner.data.IEventsRepository
+import edu.towson.cosc435.maddox.pandaplanner.model.Event
 
 
 class HomeViewModel : ViewModel(){
-    private val _todos: MutableState<List<Todo>> = mutableStateOf(listOf())
-    val todos: State<List<Todo>> = _todos
+    private val _events: MutableState<List<Event>> = mutableStateOf(listOf())
+    val events: State<List<Event>> = _events
 
-    private val _selectedTodo: MutableState<Todo>
-    val selectedTodo: State<Todo>
+    private val _selectedEvent: MutableState<Event>
+    val selectedEvent: State<Event>
 
-    private val _repositoryTodo: ITodosRepository = TodosRepository()
+    private val _repositoryEvent: IEventsRepository = EventsRepository()
 
     init{
-        _todos.value = _repositoryTodo.getTodos()
-        _selectedTodo = mutableStateOf(_todos.value.get(0))
-        selectedTodo = _selectedTodo
+        _events.value = _repositoryEvent.getEvents()
+        _selectedEvent= mutableStateOf(_events.value.get(0))
+        selectedEvent= _selectedEvent
     }
 
-    fun addTodo(todo: Todo){
-        _repositoryTodo.addTodo(todo)
-        _todos.value = _repositoryTodo.getTodos()
+    fun addEvent(event: Event){
+        _repositoryEvent.addEvent(event)
+        _events.value = _repositoryEvent.getEvents()
     }
 
-    fun deleteTodo(idx: Int){
-        _repositoryTodo.deleteTodo(idx)
-        _todos.value = _repositoryTodo.getTodos()
+    fun deleteEvent(idx: Int){
+        _repositoryEvent.deleteEvent(idx)
+        _events.value = _repositoryEvent.getEvents()
     }
 
     fun toggleCompleted(idx: Int){
-        _repositoryTodo.toggleCompleted(idx)
-        _todos.value = _repositoryTodo.getTodos()
+        _repositoryEvent.toggleCompleted(idx)
+        _events.value = _repositoryEvent.getEvents()
     }
 
     //fun filterSearch(search: String){}
 
-    fun selectTodo(todo: Todo){
-        _selectedTodo.value = todo
+    fun selectEvent(event: Event){
+        _selectedEvent.value = event
     }
 }

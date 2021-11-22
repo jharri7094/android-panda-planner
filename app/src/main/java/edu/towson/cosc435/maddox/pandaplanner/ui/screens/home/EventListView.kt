@@ -10,18 +10,20 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import edu.towson.cosc435.maddox.pandaplanner.model.Event
+import edu.towson.cosc435.maddox.pandaplanner.ui.components.AddEventFAB
 
 
 @ExperimentalFoundationApi
 @Composable
-fun TodoListView(
-    todos: List<Todo>,
-    selectedTodo: Todo,
+fun EventListView(
+    events: List<Event>,
+    selectedEvent: Event,
     onDelete: (Int) -> Unit,
     onToggle: (Int) -> Unit,
     //onFilter: (String) -> Unit,
-    onSelectTodo: (Todo) -> Unit,
-    onAddTodo: () -> Unit
+    onSelectEvent: (Event) -> Unit,
+    onAddEvent: () -> Unit
 ){
     Box(
         contentAlignment = Alignment.Center
@@ -29,14 +31,14 @@ fun TodoListView(
         {
           Column(){
               LazyColumn{
-                  itemsIndexed(todos) { index, todo ->
-                      TodoRow(index, todo, onDelete, onToggle, onSelectTodo)
+                  itemsIndexed(events) { index, event ->
+                      EventRow(index, event, onDelete, onToggle, onSelectEvent)
 
                   }
               }
           }
-            AddTodoFloatingActionButton(
-                onClick = onAddTodo,
+            AddEventFAB(
+                onClick = onAddEvent,
                 modifier = Modifier.padding(12.dp).align(Alignment.BottomEnd)
             )
         }

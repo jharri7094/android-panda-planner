@@ -20,15 +20,16 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.runtime.*
+import edu.towson.cosc435.maddox.pandaplanner.model.Event
 
 @ExperimentalFoundationApi
 @Composable
-fun TodoRow(
+fun EventRow(
     index: Int,
-    todo: Todo,
+    event: Event,
     onDelete: (Int) -> Unit,
     onToggle: (Int) -> Unit,
-    onSelectedTodo: (Todo) -> Unit
+    onSelectedEvent: (Event) -> Unit
 ) {
     Card(
         shape = RoundedCornerShape(5.dp),
@@ -43,7 +44,7 @@ fun TodoRow(
                     onLongClick = {
                         onToggle(index)
                     },
-                    onClick = { onSelectedTodo(todo) }
+                    onClick = { onSelectedEvent(event) }
                 )
                 .padding(16.dp),
             verticalAlignment = Alignment.CenterVertically,
@@ -56,19 +57,19 @@ fun TodoRow(
                     modifier = Modifier.padding(5.dp),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    Text(todo.timePeriod, modifier = Modifier.weight(3.0f), fontSize = 32.sp)
+                    Text(event.timePeriod, modifier = Modifier.weight(3.0f), fontSize = 32.sp)
                 }
                 Row(
                     modifier = Modifier.padding(5.dp),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    Text(todo.name, modifier = Modifier.weight(2.0f), fontSize = 28.sp)
+                    Text(event.name, modifier = Modifier.weight(2.0f), fontSize = 28.sp)
                 }
                 Row(
                     modifier = Modifier.padding(5.dp),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    Text(todo.details, modifier = Modifier.weight(2.0f))
+                    Text(event.details, modifier = Modifier.weight(2.0f))
                 }
             }
             Column(
@@ -81,7 +82,7 @@ fun TodoRow(
                 Row(
                     verticalAlignment = Alignment.CenterVertically
                 ){
-                    Checkbox(checked = todo.isCompleted, onCheckedChange = { onToggle(index) }, modifier = Modifier.padding(end=5.dp))
+                    Checkbox(checked = event.isCompleted, onCheckedChange = { onToggle(index) }, modifier = Modifier.padding(end=5.dp))
                 }
             }
         }
