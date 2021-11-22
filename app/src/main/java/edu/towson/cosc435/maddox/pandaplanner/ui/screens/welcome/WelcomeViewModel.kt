@@ -26,14 +26,3 @@ class WelcomeViewModel : ViewModel() {
         }
     }
 }
-//code for random dad joke api
-//val client = OkHttpClient()
-//
-//val request = Request.Builder()
-//    .url("https://dad-jokes.p.rapidapi.com/joke/search?term=cow")
-//    .get()
-//    .addHeader("x-rapidapi-host", "dad-jokes.p.rapidapi.com")
-//    .addHeader("x-rapidapi-key", "SIGN-UP-FOR-KEY")
-//    .build()
-//
-//val response = client.newCall(request).execute()
