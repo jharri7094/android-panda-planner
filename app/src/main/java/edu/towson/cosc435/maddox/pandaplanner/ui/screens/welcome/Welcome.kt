@@ -13,7 +13,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 
 @Composable
 fun Welcome(){
-    val vm : WelcomeViewModel by viewModel()
+    val vm : WelcomeViewModel = viewModel()
     val randomMessage1 = vm.randomMessage1
     val randomMessage2 = vm.randomMessage2
 

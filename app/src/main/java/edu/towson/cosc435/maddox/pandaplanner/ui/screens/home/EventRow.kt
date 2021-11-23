@@ -32,7 +32,6 @@ fun EventRow(
         shape = RoundedCornerShape(5.dp),
         elevation = 16.dp,
         modifier = Modifier
-            .padding(start = 10.dp, end = 10.dp, top = 7.dp, bottom = 7.dp)
             .fillMaxWidth()
     ) {
         Row(
@@ -42,40 +41,31 @@ fun EventRow(
                         onToggle(index)
                     },
                     onClick = { onSelectedEvent(event) }
-                )
-                .padding(16.dp),
+                ),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceEvenly
         ) {
             Column(
-                modifier = Modifier.weight(1.5f)
             ) {
                 Row(
-                    modifier = Modifier.padding(5.dp),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Text(event.endDate, modifier = Modifier.weight(3.0f), fontSize = 32.sp)
                 }
                 Row(
-                    modifier = Modifier.padding(5.dp),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Text(event.startDate, modifier = Modifier.weight(2.0f), fontSize = 28.sp)
                 }
                 Row(
-                    modifier = Modifier.padding(5.dp),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Text(event.eventName, modifier = Modifier.weight(2.0f))
                 }
             }
             Column(
-                modifier = Modifier.weight(1.0f)
             ) {
-/*                Button(onClick= { onDelete(index) }, modifier = Modifier.fillMaxWidth()) {
-                    Text("Delete")
-                }*/
-                Spacer(modifier = Modifier.padding(bottom = 5.dp))
+
                 Row(
                     verticalAlignment = Alignment.CenterVertically
                 ){
