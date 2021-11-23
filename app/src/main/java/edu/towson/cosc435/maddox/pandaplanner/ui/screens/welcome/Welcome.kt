@@ -13,9 +13,9 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 
 @Composable
 fun Welcome(){
-    val vm : WelcomeViewModel by viewModel()
-    val randomMessage1 = vm.randomMessage1
-    val randomMessage2 = vm.randomMessage2
+    val vm : WelcomeViewModel = viewModel()
+    val randomMessage1 = vm.randomMessage1.value
+    val randomMessage2 = vm.randomMessage2.value
 
     Column(modifier = Modifier.clickable { //TODO implement navigation
          },
