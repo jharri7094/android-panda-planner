@@ -9,7 +9,7 @@ class EventsRepository: IEventsRepository {
     init{
         _originalEventList = (0..3).map { i ->
             Event("Event $i", "12am - 12pm", "This is a dummy task",
-            false, 3)
+            "false", "4", false)
         }
         _events = _originalEventList.map{ s -> s }
     }
@@ -25,7 +25,7 @@ class EventsRepository: IEventsRepository {
     }
     override fun toggleCompleted(idx: Int){
         val event = _events.get(idx)
-        val newEvent = event.copy(isCompleted = !event.isCompleted)
+        val newEvent = event.copy(eventDetails = event.eventDetails)
         val _events = _events.subList(0, idx) + listOf(newEvent) +
                 _events.subList(idx + 1, _events.size)
     }
