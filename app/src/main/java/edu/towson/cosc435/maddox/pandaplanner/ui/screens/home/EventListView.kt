@@ -39,7 +39,7 @@ fun EventListView(
           }
             AddEventFAB(
                 onClick = onAddEvent,
-                modifier = Modifier.padding(12.dp).align(Alignment.BottomEnd)
+                modifier = Modifier.align(Alignment.BottomEnd)
             )
         }
 }
