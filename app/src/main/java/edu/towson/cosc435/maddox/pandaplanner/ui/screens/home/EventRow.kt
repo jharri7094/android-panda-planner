@@ -9,17 +9,14 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Button
 import androidx.compose.material.Card
 import androidx.compose.material.Checkbox
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.compose.runtime.*
 import edu.towson.cosc435.maddox.pandaplanner.model.Event
 
 @ExperimentalFoundationApi
@@ -57,19 +54,19 @@ fun EventRow(
                     modifier = Modifier.padding(5.dp),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    Text(event.timePeriod, modifier = Modifier.weight(3.0f), fontSize = 32.sp)
+                    Text(event.endDate, modifier = Modifier.weight(3.0f), fontSize = 32.sp)
                 }
                 Row(
                     modifier = Modifier.padding(5.dp),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    Text(event.name, modifier = Modifier.weight(2.0f), fontSize = 28.sp)
+                    Text(event.startDate, modifier = Modifier.weight(2.0f), fontSize = 28.sp)
                 }
                 Row(
                     modifier = Modifier.padding(5.dp),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    Text(event.details, modifier = Modifier.weight(2.0f))
+                    Text(event.eventName, modifier = Modifier.weight(2.0f))
                 }
             }
             Column(
@@ -82,7 +79,7 @@ fun EventRow(
                 Row(
                     verticalAlignment = Alignment.CenterVertically
                 ){
-                    Checkbox(checked = event.isCompleted, onCheckedChange = { onToggle(index) }, modifier = Modifier.padding(end=5.dp))
+                    Checkbox(checked = false, onCheckedChange = { onToggle(index) }, modifier = Modifier.padding(end=5.dp))
                 }
             }
         }
