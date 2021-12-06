@@ -21,7 +21,7 @@ fun Home(){
         onToggle=vm::toggleCompleted,
         onSelectEvent=vm::selectEvent,
         onAddEvent={
-            val event = Event("COSC 435", "12pm - 12am", "dummy task", false, 3)
+            val event = Event("COSC 435", "12pm - 12am", "dummy task", "false", "d", false)
             vm.addEvent(event)
         }
     )
