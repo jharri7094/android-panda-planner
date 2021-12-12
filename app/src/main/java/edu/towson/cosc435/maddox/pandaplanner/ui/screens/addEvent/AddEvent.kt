@@ -29,6 +29,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import edu.towson.cosc435.maddox.pandaplanner.model.Event
+import edu.towson.cosc435.maddox.pandaplanner.ui.components.SmallHeader
+import edu.towson.cosc435.maddox.pandaplanner.ui.components.genericText
 import edu.towson.cosc435.maddox.pandaplanner.ui.theme.PandaPlannerTheme
 import java.lang.Exception
 
@@ -48,25 +50,18 @@ fun AddEvent(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier.fillMaxWidth()
     ) {
-        Text(
-            "Add a new event",
-            fontSize = 28.sp,
-            modifier = Modifier
-                .padding(8.dp)
-                .focusRequester(startDateTf)
-        )
+        SmallHeader(Text = "Add a new event")
         OutlinedTextField(
             value = vm.eventDetails.value,
             onValueChange = vm::setEventDetails,
             placeholder = {
-                Text("Start Date")
+                genericText("Start Date")
             },
             label = {
-                Text("Start Date")
+                genericText("Start Date")
             },
             singleLine = true,
             modifier = Modifier
-                .padding(16.dp)
                 .focusRequester(startDateTf),
             keyboardOptions = KeyboardOptions(
                 imeAction = ImeAction.Next,
@@ -80,14 +75,13 @@ fun AddEvent(
             value = vm.endDate.value,
             onValueChange = vm::setEndDate,
             placeholder = {
-                Text("End Date")
+                genericText("End Date")
             },
             singleLine = true,
             label = {
-                Text("End Date")
+                genericText("End Date")
             },
             modifier = Modifier
-                .padding(16.dp)
                 .focusRequester(endDateTf),
             keyboardOptions = KeyboardOptions(
                 imeAction = ImeAction.Next,
@@ -101,14 +95,13 @@ fun AddEvent(
             value = vm.eventName.value,
             onValueChange = vm::setEventName,
             placeholder = {
-                Text("Event Name")
+                genericText("Event Name")
             },
             label = {
-                Text("Event Name")
+                genericText("Event Name")
             },
             singleLine = true,
             modifier = Modifier
-                .padding(16.dp)
                 .focusRequester(eventNameTf),
             keyboardOptions = KeyboardOptions(
                 keyboardType = KeyboardType.Number,
@@ -122,14 +115,13 @@ fun AddEvent(
             value = vm.eventDetails.value,
             onValueChange = vm::setEventDetails,
             placeholder = {
-                Text("Event Details")
+                genericText("Event Details")
             },
             label = {
-                Text("Event Details")
+                genericText("Event Details")
             },
             singleLine = true,
             modifier = Modifier
-                .padding(16.dp)
                 .focusRequester(eventDetailsTf),
             keyboardOptions = KeyboardOptions(
                 imeAction = ImeAction.Next,
@@ -194,6 +186,6 @@ fun AddEvent(
 fun DefaultPreview() {
     PandaPlannerTheme() {
         val vm = AddEventViewModel()
-        //NewEventView(vm, {})
+        AddEvent(vm = vm, onAddEvent = {})
     }
 }
