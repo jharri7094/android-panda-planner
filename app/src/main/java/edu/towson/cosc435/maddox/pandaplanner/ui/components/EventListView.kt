@@ -31,7 +31,7 @@ fun EventListView(
           Column(){
               LazyColumn{
                   itemsIndexed(events) { index, event ->
-                      EventRow(index, event, onDelete, onToggle, onSelectEvent)
+                      EventRow(index, event, onDelete, onToggle)
 
                   }
               }
