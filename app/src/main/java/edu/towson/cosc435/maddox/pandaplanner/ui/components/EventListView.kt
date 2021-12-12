@@ -21,7 +21,6 @@ fun EventListView(
     selectedEvent: Event,
     onDelete: (Int) -> Unit,
     onToggle: (Int) -> Unit,
-    //onFilter: (String) -> Unit,
     onSelectEvent: (Event) -> Unit,
     onAddEvent: () -> Unit
 ){

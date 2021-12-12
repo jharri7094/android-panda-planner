@@ -1,6 +1,5 @@
 package edu.towson.cosc435.maddox.pandaplanner.ui.screens.welcome
 
-import android.content.Context
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -12,18 +11,22 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class WelcomeViewModel : ViewModel() {
-    private var _randomMessage1 by mutableStateOf("")
+    private var _randomMessage1 : MutableState<String> = mutableStateOf("some setup")
     val randomMessage1 = _randomMessage1
 
-    private var _randomMessage2 by mutableStateOf("")
+    private var _randomMessage2 : MutableState<String> = mutableStateOf("some punchline")
     val randomMessage2 = _randomMessage2
 
     init {
-        val JF = JokeFetcher()
         viewModelScope.launch(context=Dispatchers.IO) {
-            val Joke = JF.fetchJoke()
-            _randomMessage1=Joke.setup
-            _randomMessage2=Joke.punchline
+            loadJoke()
         }
+    }
+
+    private suspend fun loadJoke(){
+        val jF = JokeFetcher()
+        val joke = jF.fetchJoke()
+        _randomMessage1.value=joke.setup
+        _randomMessage2.value=joke.punchline
     }
 }

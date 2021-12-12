@@ -4,4 +4,8 @@ data class Joke(
     val id : String,
     val joke: String,
     val status : Int
-)
+) {
+    override fun toString(): String {
+        return "$joke"
+    }
+}
