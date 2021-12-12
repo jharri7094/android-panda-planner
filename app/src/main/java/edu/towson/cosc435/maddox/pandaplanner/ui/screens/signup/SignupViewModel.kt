@@ -6,13 +6,15 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import edu.towson.cosc435.maddox.pandaplanner.data.EventsRepository
 import edu.towson.cosc435.maddox.pandaplanner.data.IEventsRepository
+import edu.towson.cosc435.maddox.pandaplanner.model.User
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 class SignupViewModel(app : Application) : AndroidViewModel(app){
 
-    val repo : IEventsRepository = EventsRepository(app)
+    private val repo : IEventsRepository = EventsRepository(app)
+
     private val _username = mutableStateOf("")
     val username = _username
 
@@ -74,7 +76,7 @@ class SignupViewModel(app : Application) : AndroidViewModel(app){
     }
 
     private suspend fun checkForExistingUsers(){
-        val userId : Int?
+        val userId : Long?
         withContext(context = viewModelScope.coroutineContext + Dispatchers.IO) {
             userId = repo.getUserId(username = _username.value, password = _password.value)
             _showCopyValidationText.value = userId != null

@@ -5,11 +5,16 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
+import edu.towson.cosc435.maddox.pandaplanner.data.EventsRepository
+import edu.towson.cosc435.maddox.pandaplanner.data.IEventsRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 class LoginViewModel(app : Application) : AndroidViewModel(app) {
+
+    private val repo : IEventsRepository = EventsRepository(app)
+
     private val _validating : MutableState<Boolean> = mutableStateOf(false)
 
     private val _username = mutableStateOf("")
@@ -18,8 +23,8 @@ class LoginViewModel(app : Application) : AndroidViewModel(app) {
     private val _password = mutableStateOf("")
     val password = _password
 
-    private val _user_id : MutableState<Int?> = mutableStateOf(null)
-    val user_id = _user_id
+    private val _userId : MutableState<Long?> = mutableStateOf(null)
+    val userId = _userId
 
     private val _navigate = mutableStateOf(false)
     val navigate = _navigate
@@ -48,7 +53,7 @@ class LoginViewModel(app : Application) : AndroidViewModel(app) {
 
         viewModelScope.launch(Dispatchers.Main){
             fetchUserId()
-            if (_user_id.value != null) {
+            if (_userId.value != null) {
                 _validating.value = false
                 _showValidationText.value = false
                 _navigate.value = true
@@ -60,7 +65,7 @@ class LoginViewModel(app : Application) : AndroidViewModel(app) {
     }
 
     private suspend fun fetchUserId(){
-        _user_id.value =
+        _userId.value =
             withContext(viewModelScope.coroutineContext + Dispatchers.IO)
             {
                 repo.getUserId(

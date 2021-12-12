@@ -2,31 +2,50 @@ package edu.towson.cosc435.maddox.pandaplanner.data
 
 import android.app.Application
 import edu.towson.cosc435.maddox.pandaplanner.model.Event
+import edu.towson.cosc435.maddox.pandaplanner.model.Priority
+import edu.towson.cosc435.maddox.pandaplanner.db.DB
+import edu.towson.cosc435.maddox.pandaplanner.db.PandaDAO
+import edu.towson.cosc435.maddox.pandaplanner.model.User
 
 class EventsRepository(app : Application): IEventsRepository {
-    private var _events: List<Event>
-    private val _originalEventList: List<Event> = (0..3).map { i ->
-        Event("Event $i", "12am - 12pm", "This is a dummy task",
-        "false", "4", false)
+    private var _dummyEvents : List<Event>
+
+    private val dao : PandaDAO = DB.getDatabase(app).pandaDAO()
+
+
+    private val _originalDummyEventList : List<Event> = (0..3).map { i ->
+        Event(eventName = "Event $i", startDate = i.toString(), endDate = (i+i).toString(), eventDetails = "event event $i", isCompleted = i%2==0, priority = Priority.HIGH.toString())
     }
 
     init{
-        _events = _originalEventList.map{ s -> s }
+        _dummyEvents = _originalDummyEventList.map{ s -> s }
     }
 
-    override fun getEvents(): List<Event> {
-        return _events
+    override suspend fun getUserId(username : String, password : String) : Long? {
+        return dao.getUserId(username = username, password = password)
     }
-    override fun deleteEvent(idx: Int){
-        _events = _events.subList(0, idx) + _events.subList(idx + 1, _events.size)
+
+    override suspend fun insertNewUser(user: User) {
+        dao.insertNewUser(user = user)
     }
-    override fun addEvent(event: Event){
-        _events = listOf(event) + _events
+
+    // Dummy testing functions
+    override fun getDummyEvents() : List<Event> {
+        return _dummyEvents
     }
-    override fun toggleCompleted(idx: Int){
-        val event = _events.get(idx)
-        val newEvent = event.copy(eventDetails = event.eventDetails)
-        val _events = _events.subList(0, idx) + listOf(newEvent) +
-                _events.subList(idx + 1, _events.size)
+
+    override fun deleteDummyEvent(idx : Int){
+        _dummyEvents = _dummyEvents.subList(0, idx) + _dummyEvents.subList(idx + 1, _dummyEvents.size)
     }
+
+    override fun addDummyEvent(event : Event){
+        _dummyEvents = listOf(event) + _dummyEvents
+    }
+
+    override fun toggleDummyCompleted(idx : Int){
+        val event = _dummyEvents[idx]
+        val newEvent = event.copy(isCompleted = !event.isCompleted)
+        _dummyEvents = _dummyEvents.subList(0, idx) + listOf(newEvent) + _dummyEvents.subList(idx + 1, _dummyEvents.size)
+    }
+
 }

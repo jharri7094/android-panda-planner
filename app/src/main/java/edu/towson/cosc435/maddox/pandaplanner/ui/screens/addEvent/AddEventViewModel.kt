@@ -59,6 +59,6 @@ class AddEventViewModel : ViewModel(){
         if(eventName.value.isEmpty()) {
             throw Exception("Event name is needed")
         }
-        return Event(startDate.value, endDate.value, eventName.value, eventDetails.value, priority.value, false)
+        return Event(eventId = 0L, startDate = startDate.value, endDate = endDate.value, eventName = eventName.value, eventDetails = eventDetails.value, priority = priority.value, isCompleted = isCompleted.value)
     }
 }

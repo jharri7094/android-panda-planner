@@ -1,17 +1,15 @@
-package edu.towson.cosc435.maddox.pandaplanner.ui.screens.home
+package edu.towson.cosc435.maddox.pandaplanner.ui.components
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import edu.towson.cosc435.maddox.pandaplanner.model.Event
-import edu.towson.cosc435.maddox.pandaplanner.ui.components.AddEventFAB
+import edu.towson.cosc435.maddox.pandaplanner.ui.screens.home.EventRow
 
 
 @ExperimentalFoundationApi

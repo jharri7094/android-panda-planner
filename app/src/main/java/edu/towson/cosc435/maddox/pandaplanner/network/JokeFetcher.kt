@@ -33,8 +33,9 @@ class JokeFetcher : IJokeFetcher {
                 val joke = gson.fromJson<Joke>(json, type)
                 joke
             }
-            else
-                Joke("some setup","some punchline")
+            else {
+                Joke(id = "id", joke = "funny joke", status = 100)
+            }
         }
 
     }

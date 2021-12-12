@@ -194,6 +194,6 @@ fun AddEvent(
 fun DefaultPreview() {
     PandaPlannerTheme() {
         val vm = AddEventViewModel()
-        //NewEventView(vm, {})
+        AddEvent(onAddEvent = { }, vm = vm)
     }
 }
