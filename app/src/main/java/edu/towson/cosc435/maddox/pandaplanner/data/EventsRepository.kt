@@ -1,16 +1,16 @@
 package edu.towson.cosc435.maddox.pandaplanner.data
 
+import android.app.Application
 import edu.towson.cosc435.maddox.pandaplanner.model.Event
 
-class EventsRepository: IEventsRepository {
+class EventsRepository(app : Application): IEventsRepository {
     private var _events: List<Event>
-    private val _originalEventList: List<Event>
+    private val _originalEventList: List<Event> = (0..3).map { i ->
+        Event("Event $i", "12am - 12pm", "This is a dummy task",
+        "false", "4", false)
+    }
 
     init{
-        _originalEventList = (0..3).map { i ->
-            Event("Event $i", "12am - 12pm", "This is a dummy task",
-            "false", "4", false)
-        }
         _events = _originalEventList.map{ s -> s }
     }
 
