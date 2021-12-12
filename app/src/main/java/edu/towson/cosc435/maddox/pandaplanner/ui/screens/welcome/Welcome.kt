@@ -10,6 +10,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.viewmodel.compose.viewModel
+import edu.towson.cosc435.maddox.pandaplanner.ui.components.BigWelcome
 
 @Composable
 fun Welcome(){
@@ -22,7 +23,7 @@ fun Welcome(){
         verticalArrangement = Arrangement.Center
         ) {
         //Welcome message
-        Text(text = "Welcome to Panda Planner!")
+        BigWelcome("Welcome to Panda Planner!")
 
         Row() {
             //Column for random message 1

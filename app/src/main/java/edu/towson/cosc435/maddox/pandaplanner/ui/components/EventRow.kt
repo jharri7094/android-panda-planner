@@ -26,7 +26,6 @@ fun EventRow(
     event: Event,
     onDelete: (Int) -> Unit,
     onToggle: (Int) -> Unit,
-    onSelectedEvent: (Event) -> Unit
 ) {
     Card(
         shape = RoundedCornerShape(5.dp),
@@ -38,9 +37,9 @@ fun EventRow(
             modifier = Modifier
                 .combinedClickable(
                     onLongClick = {
-                        onToggle(index)
+                        onDelete(index)
                     },
-                    onClick = { onSelectedEvent(event) }
+                    onClick = { onToggle(index) }
                 ),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceEvenly

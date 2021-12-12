@@ -11,6 +11,7 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import edu.towson.cosc435.maddox.pandaplanner.ui.components.UserEntryTextField
+import edu.towson.cosc435.maddox.pandaplanner.ui.components.BigWelcome
 
 @Composable
 fun Login(vm: LoginViewModel,
@@ -30,7 +31,7 @@ fun Login(vm: LoginViewModel,
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     )  {
-        Text(text = "Welcome! Please login below")
+        BigWelcome("Welcome! Please login below")
         Spacer(modifier = Modifier.padding(vertical = 10.dp))
         if(vm.showValidationText.value) {
             Text(
