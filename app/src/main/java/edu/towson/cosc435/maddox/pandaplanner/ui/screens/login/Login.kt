@@ -1,5 +1,6 @@
 package edu.towson.cosc435.maddox.pandaplanner.ui.screens.login
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Button
@@ -8,10 +9,14 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
+import coil.compose.rememberImagePainter
+import edu.towson.cosc435.maddox.pandaplanner.R
 import edu.towson.cosc435.maddox.pandaplanner.ui.components.UserEntryTextField
 import edu.towson.cosc435.maddox.pandaplanner.ui.components.BigWelcome
 
@@ -31,6 +36,10 @@ fun Login(vm: LoginViewModel,
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     )  {
+
+        val painter = rememberImagePainter(R.drawable.planning_panda)
+        Image(modifier = Modifier.rotate(180F), painter = painter, contentDescription = null, alignment = Alignment.Center, contentScale = ContentScale.FillBounds)
+
         BigWelcome("Welcome! Please login below")
         Spacer(modifier = Modifier.padding(vertical = 10.dp))
         if(vm.showValidationText.value) {

@@ -21,7 +21,6 @@ class MainActivity : ComponentActivity() {
                 val plannerLoginNavViewModel = LoginNavViewModel(application)
                 PlannerLoginNavigation(application, plannerLoginNavViewModel)
             }
-
         }
     }
 }
