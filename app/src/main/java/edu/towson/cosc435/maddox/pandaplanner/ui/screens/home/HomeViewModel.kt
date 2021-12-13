@@ -13,35 +13,44 @@ import kotlinx.coroutines.launch
 
 class HomeViewModel(app : Application, private val repo: IEventsRepository) : AndroidViewModel(app){
 
-    private var masterList: List<Event> = listOf()
     private val _events: MutableState<List<Event>> = mutableStateOf(listOf())
-    val events: State<List<Event>> = _events
+    val events: MutableState<List<Event>> = _events
 
     init {
         viewModelScope.launch {
-            masterList = repo.getEvents()
-            _events.value = masterList.filter { event -> !event.isCompleted }
+            reloadEvents()
         }
     }
 
+    private suspend fun reloadEvents(){
+        repo.fetchEvents()
+        _events.value = repo.getHomeEvents()
+    }
+
     fun addEvent(event: Event){
-        _events.value = listOf(event) + masterList
+        _events.value = listOf(event) + _events.value
         viewModelScope.launch {
             repo.addEvent(event)
+            reloadEvents()
         }
     }
 
     fun deleteEvent(idx: Int){
-        _events.value = masterList.subList(0,idx) + masterList.subList(idx+1,masterList.lastIndex)
-        viewModelScope.launch { repo.deleteEvent(masterList[idx]) }
-        masterList = _events.value
+        viewModelScope.launch { repo.deleteEvent(_events.value[idx]) }
+        if (_events.value.size==1){
+            _events.value = listOf()
+        }
+        else{
+            _events.value = _events.value.subList(0,idx) + _events.value.subList(idx+1,_events.value.lastIndex)
+        }
+        viewModelScope.launch { reloadEvents() }
     }
 
     fun toggleCompleted(idx: Int){
-        _events.value = masterList.subList(0,idx) + listOf(masterList[idx].copy(isCompleted = !masterList[idx].isCompleted)) + masterList.subList(idx+1,masterList.lastIndex)
+        _events.value = _events.value.subList(0,idx) + listOf(_events.value[idx].copy(isCompleted = !_events.value[idx].isCompleted)) + _events.value.subList(idx+1,_events.value.lastIndex)
         viewModelScope.launch {
-            repo.updateEvent(masterList[idx])
+            repo.updateEvent(_events.value[idx])
+            reloadEvents()
         }
-        masterList = _events.value
     }
 }

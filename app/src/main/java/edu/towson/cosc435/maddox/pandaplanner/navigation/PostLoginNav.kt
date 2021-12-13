@@ -38,7 +38,10 @@ fun PostLoginNav(app : Application,
         Row(modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceEvenly) {
             IconButton(
-                onClick = { navController.popBackStack(route = Routes.Home.route, false, saveState = false)},
+                onClick = {
+                    navController.popBackStack(route = Routes.Home.route, false)
+                    navController.navigate(route = Routes.Home.route){launchSingleTop=true}
+                          },
                 modifier = Modifier.background(color = MaterialTheme.colors.secondary)
             ) {
                 Icon(
@@ -49,7 +52,8 @@ fun PostLoginNav(app : Application,
             }
 
             IconButton(
-                onClick = { navController.popBackStack(route = Routes.Log.route, false, saveState = false)},
+                onClick = { navController.popBackStack(Routes.Log.route, false)
+                    navController.navigate(Routes.Log.route){launchSingleTop=true} },
                 modifier = Modifier.background(color = MaterialTheme.colors.secondary)
             ) {
                 Icon(
@@ -79,6 +83,7 @@ fun PostLoginNav(app : Application,
                 AddEvent(
                     onAddEvent = { event ->
                         homeViewModel.addEvent(event)
+                        navController.popBackStack(Routes.Home.route, false)
                     },
                     vm = addEventViewModel,
                     onCancel = { navController.popBackStack() }

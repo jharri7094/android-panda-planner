@@ -10,6 +10,7 @@ import edu.towson.cosc435.maddox.pandaplanner.model.User
 
 class EventsRepository(app : Application): IEventsRepository {
 
+    private var masterList : List<Event> = listOf()
 
     private val dao : PandaDAO = DB.getDatabase(app).pandaDAO()
 
@@ -27,6 +28,14 @@ class EventsRepository(app : Application): IEventsRepository {
         return userId.value!!
     }
 
+    override fun getHomeEvents(): List<Event> {
+        return masterList.filter{event -> !event.isCompleted}
+    }
+
+    override fun getAllEvents(): List<Event> {
+        return masterList
+    }
+
     override suspend fun deleteEvent(event : Event){
         dao.deleteEvent(event)
     }
@@ -39,8 +48,8 @@ class EventsRepository(app : Application): IEventsRepository {
         dao.insertNewEvent(event)
     }
 
-    override suspend fun getEvents(): List<Event> {
-        return dao.getEvents(userId = userId.value!!)
+    override suspend fun fetchEvents() {
+        masterList = dao.getEvents(userId = userId.value!!)
     }
 
 

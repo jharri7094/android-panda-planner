@@ -15,6 +15,8 @@ interface IEventsRepository {
     suspend fun deleteEvent(event: Event)
     suspend fun updateEvent(event : Event)
     suspend fun addEvent(event: Event)
-    suspend fun getEvents(): List<Event>
     fun returnUserId(): Long
+    fun getHomeEvents(): List<Event>
+    fun getAllEvents() : List<Event>
+    suspend fun fetchEvents()
 }

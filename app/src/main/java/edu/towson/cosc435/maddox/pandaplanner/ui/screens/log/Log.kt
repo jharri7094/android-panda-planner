@@ -1,6 +1,8 @@
 package edu.towson.cosc435.maddox.pandaplanner.ui.screens.log
 
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
@@ -9,6 +11,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import edu.towson.cosc435.maddox.pandaplanner.ui.components.GenericText
+import edu.towson.cosc435.maddox.pandaplanner.ui.components.Header
 import edu.towson.cosc435.maddox.pandaplanner.ui.screens.home.EventRow
 
 @ExperimentalFoundationApi
@@ -19,17 +22,22 @@ fun loadList(
     onDelete: (Int) -> Unit,
     onToggle: (Int) -> Unit
 ) {
-    if (vm.listLog.value.isNotEmpty()) {
-        LazyColumn(
+    Column(modifier = Modifier.fillMaxSize(),
+        horizontalAlignment = Alignment.CenterHorizontally) {
+        Header(text = "All Events")
+        if (vm.listLog.value.isNotEmpty()) {
+            LazyColumn(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 modifier = Modifier.fillMaxWidth()
-        ) {
+            ) {
 
-            itemsIndexed(vm.listLog.value) { idx, event ->
-                EventRow(idx, event, onDelete = onDelete, onToggle = onToggle)
+                itemsIndexed(vm.listLog.value) { idx, event ->
+                    EventRow(idx, event, onDelete = onDelete, onToggle = onToggle)
+                }
             }
+        } 
+        else {
+            GenericText(Text = "No events to list")
         }
     }
-    else
-    GenericText(Text = "No events to list")
 }
