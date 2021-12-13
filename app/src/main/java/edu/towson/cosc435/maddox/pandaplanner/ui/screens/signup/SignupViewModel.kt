@@ -28,7 +28,7 @@ class SignupViewModel(app : Application,private val repo : EventsRepository) : A
     val showCopyValidationText = _showCopyValidationText
 
     private val _showEmptyFieldsValidationText = mutableStateOf(false)
-    val showEmptyFieldsValidationText = _showCopyValidationText
+    val showEmptyFieldsValidationText = _showEmptyFieldsValidationText
 
     private val _valid = mutableStateOf(false)
     val valid = _valid
@@ -68,7 +68,7 @@ class SignupViewModel(app : Application,private val repo : EventsRepository) : A
     }
 
     private fun checkForEmptyFields() {
-        _showEmptyFieldsValidationText.value = _confirmPassword.value == "" || _password.value == "" || _username.value == ""
+        _showEmptyFieldsValidationText.value = confirmPassword.value == "" || password.value == "" || username.value == ""
     }
 
     fun checkForPasswordMatch(){

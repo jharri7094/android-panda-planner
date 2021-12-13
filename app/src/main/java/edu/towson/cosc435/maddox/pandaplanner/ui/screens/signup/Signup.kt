@@ -1,6 +1,7 @@
 package edu.towson.cosc435.maddox.pandaplanner.ui.screens.signup
 
 import android.widget.Toast
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Button
@@ -9,11 +10,15 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
+import coil.compose.rememberImagePainter
+import edu.towson.cosc435.maddox.pandaplanner.R
 import edu.towson.cosc435.maddox.pandaplanner.ui.components.UserEntryTextField
 
 @Composable
@@ -64,6 +69,10 @@ fun Signup(vm: SignupViewModel,
         UserEntryTextField(fieldText = vm.username.value, setText = {s -> vm.setUsername(s)}, labelText = "Enter username:", visualTransformation = VisualTransformation.None)
         UserEntryTextField(fieldText = vm.password.value, setText = {s -> vm.setPassword(s)}, labelText = "Enter password:", visualTransformation = PasswordVisualTransformation())
         UserEntryTextField(fieldText = vm.confirmPassword.value, setText = {s -> vm.setConfirmPassword(s)}, labelText = "Confirm password:", visualTransformation = PasswordVisualTransformation())
+
+        val painter = rememberImagePainter(R.drawable.planning_panda)
+        Image(painter = painter, contentDescription = null, alignment = Alignment.Center, contentScale = ContentScale.FillBounds)
+
         Row(modifier = Modifier.padding(10.dp)) {
 
             Button(onClick = {
