@@ -5,15 +5,12 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import edu.towson.cosc435.maddox.pandaplanner.data.EventsRepository
-import edu.towson.cosc435.maddox.pandaplanner.data.IEventsRepository
 import edu.towson.cosc435.maddox.pandaplanner.model.User
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class SignupViewModel(app : Application) : AndroidViewModel(app){
-
-    private val repo : IEventsRepository = EventsRepository(app)
+class SignupViewModel(app : Application,private val repo : EventsRepository) : AndroidViewModel(app){
 
     private val _username = mutableStateOf("")
     val username = _username
@@ -49,10 +46,10 @@ class SignupViewModel(app : Application) : AndroidViewModel(app){
     }
 
     fun validate(){
-        viewModelScope.launch(Dispatchers.IO){
+        checkForPasswordMatch()
+        checkForEmptyFields()
+        viewModelScope.launch{
             checkForExistingUsers()
-            checkForPasswordMatch()
-            checkForEmptyFields()
             if (!_showCopyValidationText.value && !_showMatchValidationText.value && !_showEmptyFieldsValidationText.value)
             {
                 viewModelScope.launch(Dispatchers.Main ) {
@@ -71,7 +68,7 @@ class SignupViewModel(app : Application) : AndroidViewModel(app){
     }
 
     private fun checkForEmptyFields() {
-        _showEmptyFieldsValidationText.value = !(_confirmPassword.value == "" || _password.value == "" || _username.value == "")
+        _showEmptyFieldsValidationText.value = _confirmPassword.value == "" || _password.value == "" || _username.value == ""
     }
 
     fun checkForPasswordMatch(){

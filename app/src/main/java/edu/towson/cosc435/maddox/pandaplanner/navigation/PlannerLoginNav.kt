@@ -1,9 +1,9 @@
 package edu.towson.cosc435.maddox.pandaplanner.navigation
 
+import android.app.Application
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.ExperimentalComposeUiApi
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -16,8 +16,9 @@ import edu.towson.cosc435.maddox.pandaplanner.ui.screens.welcome.Welcome
 @ExperimentalComposeUiApi
 @ExperimentalFoundationApi
 @Composable
-fun PlannerLoginNavigation() {
+fun PlannerLoginNavigation(app : Application, vm : LoginNavViewModel) {
     val navController = rememberNavController()
+    val repo = vm.repo
 
     NavHost(navController = navController, startDestination = Routes.Welcome.route) {
 
@@ -33,9 +34,10 @@ fun PlannerLoginNavigation() {
         //Login page
         composable(Routes.Login.route)
         {
-            val loginViewModel: LoginViewModel = viewModel()
+            val loginViewModel =  LoginViewModel(app, repo)
             Login(vm = loginViewModel,
-                onLoginClick = {
+                onLoginClick = { userId ->
+                        repo.setUserId(userId)
                         navController.navigate(Routes.PostLoginNav.route) {
                             launchSingleTop = true
                         }
@@ -50,7 +52,7 @@ fun PlannerLoginNavigation() {
         //Signup page
         composable(Routes.Signup.route)
         {
-            val signupViewModel: SignupViewModel = viewModel()
+            val signupViewModel = SignupViewModel(app, repo)
             Signup(
                 onSignupClick = {
                     navController.navigate(Routes.Login.route) {
@@ -66,7 +68,7 @@ fun PlannerLoginNavigation() {
 
         //PostLoginNav to control nav with a scaffold
         composable(Routes.PostLoginNav.route){
-            PostLoginNav()
+            PostLoginNav(app, repo)
         }
 
     }

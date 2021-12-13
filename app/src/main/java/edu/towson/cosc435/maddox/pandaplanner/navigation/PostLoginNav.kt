@@ -1,21 +1,25 @@
 package edu.towson.cosc435.maddox.pandaplanner.navigation
 
+import android.app.Application
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.material.*
+import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Scaffold
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.List
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import edu.towson.cosc435.maddox.pandaplanner.data.EventsRepository
 import edu.towson.cosc435.maddox.pandaplanner.ui.screens.addEvent.AddEvent
 import edu.towson.cosc435.maddox.pandaplanner.ui.screens.addEvent.AddEventViewModel
 import edu.towson.cosc435.maddox.pandaplanner.ui.screens.home.Home
@@ -26,7 +30,8 @@ import edu.towson.cosc435.maddox.pandaplanner.ui.screens.log.loadList
 @ExperimentalComposeUiApi
 @ExperimentalFoundationApi
 @Composable
-fun PostLoginNav(){
+fun PostLoginNav(app : Application,
+                repo : EventsRepository){
     val navController = rememberNavController()
 
     Scaffold(topBar = {
@@ -55,13 +60,18 @@ fun PostLoginNav(){
             }
         }
     }){
-        val addEventViewModel : AddEventViewModel = viewModel()
-        val homeViewModel : HomeViewModel = viewModel()
+        val addEventViewModel = AddEventViewModel(app, repo)
+        val homeViewModel = HomeViewModel(app, repo)
+        val logViewModel = LogViewModel(app, repo)
 
         NavHost(navController = navController, startDestination = Routes.Home.route)
         {
             composable(Routes.Home.route){
-                Home(homeViewModel)
+                Home(homeViewModel, onFabClick = {
+                    navController.navigate(Routes.AddEvent.route){
+                        launchSingleTop = true
+                    }
+                })
             }
 
             composable(Routes.AddEvent.route){
@@ -76,7 +86,6 @@ fun PostLoginNav(){
             }
 
             composable(Routes.Log.route){
-                val logViewModel : LogViewModel = viewModel()
                 loadList(vm = logViewModel, onDelete = {idx -> logViewModel.onDelete(idx) }, onToggle = {idx -> logViewModel.onToggle(idx) })
             }
         }

@@ -12,29 +12,29 @@ import edu.towson.cosc435.maddox.pandaplanner.model.Event
 import kotlinx.coroutines.launch
 
 
-class LogViewModel(app: Application) : AndroidViewModel(app){
+class LogViewModel(app: Application, private val repo: IEventsRepository) : AndroidViewModel(app){
 
-    private var eventList = listOf<Event>()
+    private var masterList: List<Event> = listOf()
 
     private val _listLog : MutableState<List<Event>> = mutableStateOf(listOf())
     val listLog = _listLog
 
-    private val repo: IEventsRepository = EventsRepository(app)
-
     fun onDelete(idx : Int){
-        _listLog.value = _listLog.value.subList(0,idx) + _listLog.value.subList(idx+1,_listLog.value.lastIndex)
-        viewModelScope.launch { repo.deleteEvent(_listLog.value[idx]) }
+        _listLog.value = masterList.subList(0,idx) + masterList.subList(idx+1,masterList.lastIndex)
+        viewModelScope.launch { repo.deleteEvent(masterList[idx]) }
+        masterList = _listLog.value
     }
 
     fun onToggle(idx: Int) {
-        _listLog.value = _listLog.value.subList(0,idx) + _listLog.value[idx].copy(isCompleted = !_listLog.value[idx].isCompleted)+ _listLog.value.subList(idx+1,_listLog.value.lastIndex)
-        viewModelScope.launch { repo.updateEvent(_listLog.value[idx]) }
+        _listLog.value = masterList.subList(0,idx) + listOf(masterList[idx].copy(isCompleted = !masterList[idx].isCompleted)) + masterList.subList(idx+1,masterList.lastIndex)
+        viewModelScope.launch { repo.updateEvent(masterList[idx]) }
+        masterList = _listLog.value
     }
 
     init{
         viewModelScope.launch {
-            _listLog.value = repo.getEvents()
-            eventList = repo.getEvents()
+            masterList = repo.getEvents()
+            _listLog.value = masterList
         }
     }
 }

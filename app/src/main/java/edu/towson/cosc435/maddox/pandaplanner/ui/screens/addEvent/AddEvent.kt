@@ -25,6 +25,7 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import edu.towson.cosc435.maddox.pandaplanner.data.EventsRepository
 import edu.towson.cosc435.maddox.pandaplanner.model.Event
 import edu.towson.cosc435.maddox.pandaplanner.model.Priority
 import edu.towson.cosc435.maddox.pandaplanner.ui.components.GenericText
@@ -55,7 +56,7 @@ fun AddEvent(
                 text = "Okay")
             },
             title = { Text(text = "ERROR : Invalid Event") },
-            text = { Text(text = "Check all fields for completion and try again.") }
+            text = { Text(text = vm.errorDialog.value) }
         )
     }
     Column(
@@ -188,6 +189,7 @@ fun AddEvent(
                     val event = vm.validate()
                     onAddEvent(event)
                 } catch(e: Exception) {
+                    vm.setErrorDialog(e.toString())
                     vm.toggleShowValidationErrorDialog()
                 }
             },
@@ -204,7 +206,7 @@ fun AddEvent(
 @Composable
 fun DefaultPreview() {
     PandaPlannerTheme{
-        val vm = AddEventViewModel(app = Application())
+        val vm = AddEventViewModel(app = Application(), repo = EventsRepository(app = Application()))
 
         AddEvent(onAddEvent = { }, vm = vm, onCancel = {})
 

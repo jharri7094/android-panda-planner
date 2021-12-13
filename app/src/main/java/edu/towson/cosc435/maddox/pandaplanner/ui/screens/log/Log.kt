@@ -31,5 +31,5 @@ fun loadList(
         }
     }
     else
-    GenericText(Text = "No event to list")
+    GenericText(Text = "No events to list")
 }

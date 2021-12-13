@@ -5,15 +5,15 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.viewModelScope
 import edu.towson.cosc435.maddox.pandaplanner.data.EventsRepository
-import edu.towson.cosc435.maddox.pandaplanner.data.IEventsRepository
 import edu.towson.cosc435.maddox.pandaplanner.model.Event
 import edu.towson.cosc435.maddox.pandaplanner.model.Priority
-import kotlinx.coroutines.launch
 
-class AddEventViewModel(app : Application) : AndroidViewModel(app){
+class AddEventViewModel(app : Application, private val repo : EventsRepository) : AndroidViewModel(app){
 
+
+    private val _errorDialog: MutableState<String> = mutableStateOf("")
+    val errorDialog = _errorDialog
 
     private val _startDate: MutableState<String> = mutableStateOf("")
     val startDate: State<String> = _startDate
@@ -66,18 +66,31 @@ class AddEventViewModel(app : Application) : AndroidViewModel(app){
 
     fun validate(): Event {
         if(startDate.value.isEmpty()) {
-            throw Exception("Start date is needed")
+            throw Exception("Start date is needed.")
         }
         if(endDate.value.isEmpty()) {
-            throw Exception("End date is needed")
+            throw Exception("End date is needed.")
         }
         if(eventName.value.isEmpty()) {
-            throw Exception("Event name is needed")
+            throw Exception("Event name is needed.")
         }
-        return Event(eventId = 0L, startDate = startDate.value, endDate = endDate.value, eventName = eventName.value, eventDetails = eventDetails.value, priority = selectedPriority.value.toString(), isCompleted = isCompleted.value)
+        return Event(
+            eventId = 0L,
+            startDate = startDate.value,
+            endDate = endDate.value,
+            eventName = eventName.value,
+            eventDetails = eventDetails.value,
+            priority = selectedPriority.value.toString(),
+            isCompleted = isCompleted.value,
+            userId = repo.returnUserId()
+        )
     }
 
     fun toggleShowValidationErrorDialog() {
         _showValidationErrorDialog.value = !_showValidationErrorDialog.value
+    }
+
+    fun setErrorDialog(message: String) {
+        _errorDialog.value = message
     }
 }

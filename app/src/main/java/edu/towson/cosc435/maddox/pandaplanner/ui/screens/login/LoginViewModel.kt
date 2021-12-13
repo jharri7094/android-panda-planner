@@ -6,14 +6,11 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import edu.towson.cosc435.maddox.pandaplanner.data.EventsRepository
-import edu.towson.cosc435.maddox.pandaplanner.data.IEventsRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class LoginViewModel(app : Application) : AndroidViewModel(app) {
-
-    private val repo : IEventsRepository = EventsRepository(app)
+class LoginViewModel(app : Application, private val repo : EventsRepository) : AndroidViewModel(app) {
 
     private val _validating : MutableState<Boolean> = mutableStateOf(false)
 
