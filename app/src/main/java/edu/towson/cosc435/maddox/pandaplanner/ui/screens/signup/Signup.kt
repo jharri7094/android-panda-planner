@@ -30,6 +30,7 @@ fun Signup(vm: SignupViewModel,
         vm.clearErrors()
         vm.clearFields()
     }
+
     vm.checkForPasswordMatch()
 
     Column(modifier = Modifier
