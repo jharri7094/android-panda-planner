@@ -27,8 +27,7 @@ class WelcomeViewModel(app : Application) : AndroidViewModel(app) {
 
     private suspend fun loadJoke(){
         val jF = JokeFetcher()
-        val joke = jF.fetchJoke()
-        _randomMessage1.value=joke.joke
-        _randomMessage2.value=joke.joke
+        _randomMessage1.value=jF.fetchJoke().joke
+        _randomMessage2.value=jF.fetchJoke().joke
     }
 }

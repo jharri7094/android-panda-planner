@@ -1,12 +1,15 @@
 package edu.towson.cosc435.maddox.pandaplanner.ui.screens.addEvent
 
+import android.app.Application
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.ViewModel
 import edu.towson.cosc435.maddox.pandaplanner.model.Event
+import okhttp3.internal.applyConnectionSpec
 
-class AddEventViewModel : ViewModel(){
+class AddEventViewModel(app : Application) : AndroidViewModel(app){
 
     private val _startDate: MutableState<String> = mutableStateOf("")
     val startDate: State<String> = _startDate

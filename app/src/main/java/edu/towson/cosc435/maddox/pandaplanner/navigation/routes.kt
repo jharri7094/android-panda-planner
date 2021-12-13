@@ -7,4 +7,5 @@ sealed class Routes (val route: String){
     object Signup : Routes("Signup")
     object AddEvent : Routes("AddEvent")
     object Log : Routes("Log")
+    object PostLoginNav : Routes("PostLoginNav")
 }

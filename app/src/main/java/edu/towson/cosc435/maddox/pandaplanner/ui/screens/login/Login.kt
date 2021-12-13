@@ -15,14 +15,14 @@ import edu.towson.cosc435.maddox.pandaplanner.ui.components.BigWelcome
 
 @Composable
 fun Login(vm: LoginViewModel,
-          onLoginClick : (Long?) -> Unit,
+          onLoginClick : () -> Unit,
           onSignupClick : () -> Unit)
 {
     vm.setUsername("")
     vm.setPassword("")
     if (vm.navigate.value && vm.userId.value!= null){
         vm.toggleNavigate()
-        onLoginClick(vm.userId.value!!)
+        onLoginClick()
     }
     Column(
         modifier = Modifier

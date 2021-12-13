@@ -35,6 +35,13 @@ fun Signup(vm: SignupViewModel,
         verticalArrangement = Arrangement.Center)  {
         Text(text = "Welcome! Please signup below")
         Spacer(modifier = Modifier.padding(vertical = 10.dp))
+        if(vm.showEmptyFieldsValidationText.value) {
+            Text(
+                text = "ERROR: Fields cannot be blank.",
+                color = Color.Red
+            )
+            Spacer(modifier = Modifier.padding(bottom = 10.dp))
+        }
         if(vm.showMatchValidationText.value) {
             Text(
                 text = "ERROR: Passwords do not match. Try retyping passwords.",

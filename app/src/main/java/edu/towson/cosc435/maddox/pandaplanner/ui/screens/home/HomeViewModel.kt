@@ -15,15 +15,13 @@ class HomeViewModel(app : Application) : AndroidViewModel(app){
     private val _events: MutableState<List<Event>> = mutableStateOf(listOf())
     val events: State<List<Event>> = _events
 
-    private val _selectedEvent: MutableState<Event>
-    val selectedEvent: State<Event>
+    private val _selectedEvent: MutableState<Event?> = mutableStateOf(null)
+    val selectedEvent = _selectedEvent
 
     private val _repositoryEvent: IEventsRepository = EventsRepository(app = app)
 
     init{
         _events.value = _repositoryEvent.getDummyEvents()
-        _selectedEvent= mutableStateOf(_events.value.get(0))
-        selectedEvent= _selectedEvent
     }
 
     fun addEvent(event: Event){
@@ -40,8 +38,6 @@ class HomeViewModel(app : Application) : AndroidViewModel(app){
         _repositoryEvent.toggleDummyCompleted(idx)
         _events.value = _repositoryEvent.getDummyEvents()
     }
-
-    //fun filterSearch(search: String){}
 
     fun selectEvent(event: Event){
         _selectedEvent.value = event

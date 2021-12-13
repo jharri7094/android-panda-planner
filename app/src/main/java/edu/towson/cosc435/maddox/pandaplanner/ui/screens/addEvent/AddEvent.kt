@@ -1,5 +1,6 @@
 package edu.towson.cosc435.maddox.pandaplanner.ui.screens.addEvent
 
+import android.app.Application
 import android.widget.Toast
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Column
@@ -40,7 +41,6 @@ fun AddEvent(
     vm: AddEventViewModel = viewModel(),
     onAddEvent: (Event) -> Unit
 ) {
-    val locContext = LocalContext.current
     val (startDateTf, endDateTf, eventNameTf, eventDetailsTf, priorityTf) = remember { FocusRequester.createRefs() }
     val keyboardController = LocalSoftwareKeyboardController.current
     LaunchedEffect(true) {
@@ -185,7 +185,7 @@ fun AddEvent(
 @Composable
 fun DefaultPreview() {
     PandaPlannerTheme() {
-        val vm = AddEventViewModel()
+        val vm = AddEventViewModel(app = Application())
 
         AddEvent(onAddEvent = { }, vm = vm)
 

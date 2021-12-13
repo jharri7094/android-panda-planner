@@ -30,6 +30,9 @@ class SignupViewModel(app : Application) : AndroidViewModel(app){
     private val _showCopyValidationText = mutableStateOf(false)
     val showCopyValidationText = _showCopyValidationText
 
+    private val _showEmptyFieldsValidationText = mutableStateOf(false)
+    val showEmptyFieldsValidationText = _showCopyValidationText
+
     private val _valid = mutableStateOf(false)
     val valid = _valid
 
@@ -49,7 +52,8 @@ class SignupViewModel(app : Application) : AndroidViewModel(app){
         viewModelScope.launch(Dispatchers.IO){
             checkForExistingUsers()
             checkForPasswordMatch()
-            if (!_showCopyValidationText.value && !_showMatchValidationText.value)
+            checkForEmptyFields()
+            if (!_showCopyValidationText.value && !_showMatchValidationText.value && !_showEmptyFieldsValidationText.value)
             {
                 viewModelScope.launch(Dispatchers.Main ) {
                     _valid.value = true
@@ -66,6 +70,10 @@ class SignupViewModel(app : Application) : AndroidViewModel(app){
         }
     }
 
+    private fun checkForEmptyFields() {
+        _showEmptyFieldsValidationText.value = !(_confirmPassword.value == "" || _password.value == "" || _username.value == "")
+    }
+
     fun checkForPasswordMatch(){
         _showMatchValidationText.value = _confirmPassword.value != _password.value
     }
@@ -73,6 +81,7 @@ class SignupViewModel(app : Application) : AndroidViewModel(app){
     fun clearErrors(){
         _showMatchValidationText.value = false
         _showCopyValidationText.value = false
+        _showEmptyFieldsValidationText.value = false
     }
 
     private suspend fun checkForExistingUsers(){

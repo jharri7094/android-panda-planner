@@ -16,11 +16,10 @@ import edu.towson.cosc435.maddox.pandaplanner.ui.screens.home.EventRow
 @Composable
 fun EventListView(
     events: List<Event>,
-    selectedEvent: Event,
     onDelete: (Int) -> Unit,
     onToggle: (Int) -> Unit,
-    onSelectEvent: (Event) -> Unit,
-    onAddEvent: () -> Unit
+    onAddEvent: () -> Unit,
+    isFabVisible : Boolean
 ){
     Box(
         contentAlignment = Alignment.Center
@@ -34,9 +33,11 @@ fun EventListView(
                   }
               }
           }
-            AddEventFAB(
-                onClick = onAddEvent,
-                modifier = Modifier.align(Alignment.BottomEnd)
-            )
+            if (isFabVisible) {
+                AddEventFAB(
+                    onClick = onAddEvent,
+                    modifier = Modifier.align(Alignment.BottomEnd)
+                )
+            }
         }
 }

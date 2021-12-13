@@ -1,6 +1,8 @@
 package edu.towson.cosc435.maddox.pandaplanner.data
 
 import android.app.Application
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableStateOf
 import edu.towson.cosc435.maddox.pandaplanner.model.Event
 import edu.towson.cosc435.maddox.pandaplanner.model.Priority
 import edu.towson.cosc435.maddox.pandaplanner.db.DB
@@ -12,6 +14,7 @@ class EventsRepository(app : Application): IEventsRepository {
 
     private val dao : PandaDAO = DB.getDatabase(app).pandaDAO()
 
+    private val userId : MutableState<Long?> = mutableStateOf(null)
 
     private val _originalDummyEventList : List<Event> = (0..3).map { i ->
         Event(eventName = "Event $i", startDate = i.toString(), endDate = (i+i).toString(), eventDetails = "event event $i", isCompleted = i%2==0, priority = Priority.HIGH.toString())
@@ -22,7 +25,8 @@ class EventsRepository(app : Application): IEventsRepository {
     }
 
     override suspend fun getUserId(username : String, password : String) : Long? {
-        return dao.getUserId(username = username, password = password)
+        userId.value = dao.getUserId(username = username, password = password)
+        return userId.value
     }
 
     override suspend fun insertNewUser(user: User) {
