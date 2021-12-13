@@ -17,7 +17,7 @@ class EventsRepository(app : Application): IEventsRepository {
     private val userId : MutableState<Long?> = mutableStateOf(null)
 
     private val _originalDummyEventList : List<Event> = (0..3).map { i ->
-        Event(eventName = "Event $i", startDate = i.toString(), endDate = (i+i).toString(), eventDetails = "event event $i", isCompleted = i%2==0, priority = Priority.HIGH.toString())
+        Event(eventName = "Event $i", startDate = i.toString(), endDate = (i+i).toString(), eventDetails = "event event $i", isCompleted = i%2==0, priority = Priority.HIGH.toString(), userId = i.toLong())
     }
 
     init{
@@ -28,6 +28,23 @@ class EventsRepository(app : Application): IEventsRepository {
         userId.value = dao.getUserId(username = username, password = password)
         return userId.value
     }
+
+    override suspend fun deleteEvent(event : Event){
+        dao.deleteEvent(event)
+    }
+
+    override suspend fun updateEvent(event : Event){
+        dao.updateEvent(event)
+    }
+
+    override suspend fun addEvent(event: Event) {
+        dao.insertNewEvent(event)
+    }
+
+    override suspend fun getEvents(): List<Event> {
+        return dao.getEvents(userId = userId.value!!)
+    }
+
 
     override suspend fun insertNewUser(user: User) {
         dao.insertNewUser(user = user)
@@ -51,5 +68,4 @@ class EventsRepository(app : Application): IEventsRepository {
         val newEvent = event.copy(isCompleted = !event.isCompleted)
         _dummyEvents = _dummyEvents.subList(0, idx) + listOf(newEvent) + _dummyEvents.subList(idx + 1, _dummyEvents.size)
     }
-
 }

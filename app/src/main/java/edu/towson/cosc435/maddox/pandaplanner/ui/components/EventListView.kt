@@ -25,7 +25,7 @@ fun EventListView(
         contentAlignment = Alignment.Center
     )
         {
-          Column(){
+          Column {
               LazyColumn{
                   itemsIndexed(events) { index, event ->
                       EventRow(index, event, onDelete, onToggle)

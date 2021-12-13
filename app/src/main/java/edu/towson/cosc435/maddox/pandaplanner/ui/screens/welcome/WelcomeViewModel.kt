@@ -13,10 +13,10 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class WelcomeViewModel(app : Application) : AndroidViewModel(app) {
-    private var _randomMessage1 : MutableState<String> = mutableStateOf("some setup")
+    private var _randomMessage1 : MutableState<String> = mutableStateOf("")
     val randomMessage1 = _randomMessage1
 
-    private var _randomMessage2 : MutableState<String> = mutableStateOf("some punchline")
+    private var _randomMessage2 : MutableState<String> = mutableStateOf("")
     val randomMessage2 = _randomMessage2
 
     init {

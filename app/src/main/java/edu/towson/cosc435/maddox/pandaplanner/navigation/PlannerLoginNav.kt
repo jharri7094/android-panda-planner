@@ -2,6 +2,7 @@ package edu.towson.cosc435.maddox.pandaplanner.navigation
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -12,6 +13,7 @@ import edu.towson.cosc435.maddox.pandaplanner.ui.screens.signup.Signup
 import edu.towson.cosc435.maddox.pandaplanner.ui.screens.signup.SignupViewModel
 import edu.towson.cosc435.maddox.pandaplanner.ui.screens.welcome.Welcome
 
+@ExperimentalComposeUiApi
 @ExperimentalFoundationApi
 @Composable
 fun PlannerLoginNavigation() {

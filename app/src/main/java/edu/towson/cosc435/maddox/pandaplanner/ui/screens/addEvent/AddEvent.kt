@@ -1,64 +1,78 @@
 package edu.towson.cosc435.maddox.pandaplanner.ui.screens.addEvent
 
 import android.app.Application
-import android.widget.Toast
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.Button
-import androidx.compose.material.Checkbox
-import androidx.compose.material.OutlinedTextField
-import androidx.compose.material.Text
+import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import edu.towson.cosc435.maddox.pandaplanner.model.Event
+import edu.towson.cosc435.maddox.pandaplanner.model.Priority
+import edu.towson.cosc435.maddox.pandaplanner.ui.components.GenericText
 import edu.towson.cosc435.maddox.pandaplanner.ui.components.SmallHeader
-import edu.towson.cosc435.maddox.pandaplanner.ui.components.genericText
+import edu.towson.cosc435.maddox.pandaplanner.ui.components.bambooBrownButton
 import edu.towson.cosc435.maddox.pandaplanner.ui.theme.PandaPlannerTheme
-import java.lang.Exception
 
 @ExperimentalComposeUiApi
 @Composable
 fun AddEvent(
-    vm: AddEventViewModel = viewModel(),
-    onAddEvent: (Event) -> Unit
+    vm: AddEventViewModel,
+    onAddEvent: (Event) -> Unit,
+    onCancel : ()->Unit
 ) {
     val (startDateTf, endDateTf, eventNameTf, eventDetailsTf, priorityTf) = remember { FocusRequester.createRefs() }
-    val keyboardController = LocalSoftwareKeyboardController.current
     LaunchedEffect(true) {
         startDateTf.requestFocus()
     }
+    if (vm.showValidationErrorDialog.value)
+    {
+        AlertDialog(onDismissRequest = { vm.toggleShowValidationErrorDialog() },
+            buttons =
+            {
+            bambooBrownButton(
+                onClick =
+                { vm.toggleShowValidationErrorDialog()
+                },
+                text = "Okay")
+            },
+            title = { Text(text = "ERROR : Invalid Event") },
+            text = { Text(text = "Check all fields for completion and try again.") }
+        )
+    }
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = Modifier.fillMaxWidth()
+        modifier = Modifier
+            .fillMaxWidth()
+            .background(MaterialTheme.colors.surface)
     ) {
         SmallHeader(Text = "Add a new event")
         OutlinedTextField(
-            value = vm.eventDetails.value,
-            onValueChange = vm::setEventDetails,
+            value = vm.startDate.value,
+            onValueChange = { vm.setStartDate(it) },
             placeholder = {
-                genericText("Start Date")
+                GenericText("Start Date")
             },
             label = {
-                genericText("Start Date")
+                GenericText("Start Date")
             },
             singleLine = true,
             modifier = Modifier
@@ -75,11 +89,11 @@ fun AddEvent(
             value = vm.endDate.value,
             onValueChange = vm::setEndDate,
             placeholder = {
-                genericText("End Date")
+                GenericText("End Date")
             },
             singleLine = true,
             label = {
-                genericText("End Date")
+                GenericText("End Date")
             },
             modifier = Modifier
                 .focusRequester(endDateTf),
@@ -95,10 +109,10 @@ fun AddEvent(
             value = vm.eventName.value,
             onValueChange = vm::setEventName,
             placeholder = {
-                genericText("Event Name")
+                GenericText("Event Name")
             },
             label = {
-                genericText("Event Name")
+                GenericText("Event Name")
             },
             singleLine = true,
             modifier = Modifier
@@ -115,10 +129,10 @@ fun AddEvent(
             value = vm.eventDetails.value,
             onValueChange = vm::setEventDetails,
             placeholder = {
-                genericText("Event Details")
+                GenericText("Event Details")
             },
             label = {
-                genericText("Event Details")
+                GenericText("Event Details")
             },
             singleLine = true,
             modifier = Modifier
@@ -131,27 +145,31 @@ fun AddEvent(
                 onNext = { priorityTf.requestFocus() }
             )
         )
-        OutlinedTextField(
-            value = vm.priority.value,
-            onValueChange = vm::setPriority,
-            placeholder = {
-                Text("Priority")
-            },
-            singleLine = true,
-            label = {
-                Text("Priority")
-            },
-            modifier = Modifier
-                .padding(16.dp)
-                .focusRequester(priorityTf),
-            keyboardOptions = KeyboardOptions(
-                imeAction = ImeAction.Next,
-                keyboardType = KeyboardType.Text
-            ),
-            keyboardActions = KeyboardActions(
-                onDone = { keyboardController?.hide() }
-            )
-        )
+        Row(modifier = Modifier
+            .padding(16.dp)
+            .focusRequester(priorityTf)) {
+            GenericText("Priority: ")
+
+            GenericText(Text = "Low",
+                fontWeight =if (vm.selectedPriority.value==Priority.LOW) FontWeight.Bold else FontWeight.Normal,
+                modifier = Modifier
+                    .clickable { vm.setPriority("Low") }
+                    .alpha(if (vm.selectedPriority.value == Priority.LOW) 1f else .5f))
+
+            GenericText(Text = "Medium",
+                fontWeight =if (vm.selectedPriority.value==Priority.MEDIUM) FontWeight.Bold else FontWeight.Normal,
+                modifier = Modifier
+                    .clickable { vm.setPriority("Medium") }
+                    .alpha(if (vm.selectedPriority.value == Priority.MEDIUM) 1f else .5f))
+
+            GenericText(Text = "High",
+                fontWeight =if (vm.selectedPriority.value==Priority.HIGH) FontWeight.Bold else FontWeight.Normal,
+                modifier = Modifier
+                    .clickable { vm.setPriority("High") }
+                    .alpha(if (vm.selectedPriority.value == Priority.HIGH) 1f else .5f))
+
+        }
+
         Row(
             modifier = Modifier.padding(16.dp)
         ) {
@@ -164,18 +182,19 @@ fun AddEvent(
                 onCheckedChange = vm::setIsCompleted
             )
         }
-        Button(
+        bambooBrownButton(
             onClick = {
                 try {
                     val event = vm.validate()
                     onAddEvent(event)
                 } catch(e: Exception) {
-                    //Toast.makeText(locContext, e.toString(), Toast.LENGTH_SHORT).show()
+                    vm.toggleShowValidationErrorDialog()
                 }
-            }
-        ) {
-            Text("Add Task")
-        }
+            },
+            text = "Add Task"
+        )
+
+        bambooBrownButton(onClick = { onCancel() }, text = "Cancel")
     }
 }
 
@@ -184,10 +203,10 @@ fun AddEvent(
 @Preview(showBackground = true)
 @Composable
 fun DefaultPreview() {
-    PandaPlannerTheme() {
+    PandaPlannerTheme{
         val vm = AddEventViewModel(app = Application())
 
-        AddEvent(onAddEvent = { }, vm = vm)
+        AddEvent(onAddEvent = { }, vm = vm, onCancel = {})
 
     }
 }

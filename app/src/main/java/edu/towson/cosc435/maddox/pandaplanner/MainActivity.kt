@@ -14,11 +14,10 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            Surface(color = MaterialTheme.colors.surface) {
-                PandaPlannerTheme {
-                    PlannerLoginNavigation()
-                }
+            PandaPlannerTheme {
+                PlannerLoginNavigation()
             }
+
         }
     }
 }

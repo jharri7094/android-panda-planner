@@ -1,8 +1,10 @@
 package edu.towson.cosc435.maddox.pandaplanner.ui.screens.signup
 
 import android.widget.Toast
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Button
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -30,7 +32,9 @@ fun Signup(vm: SignupViewModel,
     }
     vm.checkForPasswordMatch()
 
-    Column(modifier = Modifier.fillMaxWidth().fillMaxHeight(),
+    Column(modifier = Modifier
+        .fillMaxSize()
+        .background(MaterialTheme.colors.surface),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center)  {
         Text(text = "Welcome! Please signup below")

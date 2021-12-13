@@ -1,7 +1,9 @@
 package edu.towson.cosc435.maddox.pandaplanner.ui.screens.login
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Button
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -26,8 +28,8 @@ fun Login(vm: LoginViewModel,
     }
     Column(
         modifier = Modifier
-            .fillMaxWidth()
-            .fillMaxHeight(),
+            .fillMaxSize()
+            .background(MaterialTheme.colors.surface),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     )  {
@@ -47,7 +49,8 @@ fun Login(vm: LoginViewModel,
             Button(onClick = {
                 vm.validate()
             },
-                modifier = Modifier.padding(horizontal = 15.dp)){
+                modifier = Modifier.padding(horizontal = 15.dp)
+                    .background(MaterialTheme.colors.secondary)){
                 Text(text = "Login")
             }
 

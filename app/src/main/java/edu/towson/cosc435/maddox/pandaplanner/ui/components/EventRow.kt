@@ -31,6 +31,7 @@ fun EventRow(
         shape = RoundedCornerShape(5.dp),
         elevation = 16.dp,
         modifier = Modifier
+            .padding(10.dp)
             .fillMaxWidth()
     ) {
         Row(
@@ -49,26 +50,21 @@ fun EventRow(
                 Row(
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    Text(event.endDate, modifier = Modifier.weight(3.0f), fontSize = 32.sp)
+                    Text("Start Date : "+ event.startDate, modifier = Modifier.weight(2.0f), fontSize = 28.sp)
                 }
                 Row(
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    Text(event.startDate, modifier = Modifier.weight(2.0f), fontSize = 28.sp)
+                    Text("End Date : "+ event.endDate, modifier = Modifier.weight(3.0f), fontSize = 28.sp)
                 }
                 Row(
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    Text(event.eventName, modifier = Modifier.weight(2.0f))
+                    Text("Event Name : "+ event.eventName, modifier = Modifier.weight(2.0f))
                 }
-            }
-            Column(
-            ) {
-
-                Row(
-                    verticalAlignment = Alignment.CenterVertically
-                ){
-                    Checkbox(checked = false, onCheckedChange = { onToggle(index) }, modifier = Modifier.padding(end=5.dp))
+                Row{
+                    Text("Completed? : ", modifier = Modifier.weight(2.0f))
+                    Checkbox(checked = false, onCheckedChange = { onToggle(index) } )
                 }
             }
         }

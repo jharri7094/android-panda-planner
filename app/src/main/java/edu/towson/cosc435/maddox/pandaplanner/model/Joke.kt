@@ -6,6 +6,6 @@ data class Joke(
     val status : Int
 ) {
     override fun toString(): String {
-        return "$joke"
+        return joke
     }
 }

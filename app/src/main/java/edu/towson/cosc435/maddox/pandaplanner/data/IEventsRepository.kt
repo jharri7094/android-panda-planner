@@ -11,4 +11,8 @@ interface IEventsRepository {
 
     suspend fun getUserId(username: String, password: String): Long?
     suspend fun insertNewUser(user : User)
+    suspend fun deleteEvent(event: Event)
+    suspend fun updateEvent(event : Event)
+    suspend fun addEvent(event: Event)
+    suspend fun getEvents(): List<Event>
 }

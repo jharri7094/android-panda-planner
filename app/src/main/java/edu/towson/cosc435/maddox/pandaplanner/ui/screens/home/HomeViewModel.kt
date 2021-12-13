@@ -5,18 +5,16 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import edu.towson.cosc435.maddox.pandaplanner.data.EventsRepository
 import edu.towson.cosc435.maddox.pandaplanner.data.IEventsRepository
 import edu.towson.cosc435.maddox.pandaplanner.model.Event
+import kotlinx.coroutines.launch
 
 
 class HomeViewModel(app : Application) : AndroidViewModel(app){
     private val _events: MutableState<List<Event>> = mutableStateOf(listOf())
     val events: State<List<Event>> = _events
-
-    private val _selectedEvent: MutableState<Event?> = mutableStateOf(null)
-    val selectedEvent = _selectedEvent
 
     private val _repositoryEvent: IEventsRepository = EventsRepository(app = app)
 
@@ -25,8 +23,10 @@ class HomeViewModel(app : Application) : AndroidViewModel(app){
     }
 
     fun addEvent(event: Event){
-        _repositoryEvent.addDummyEvent(event)
-        _events.value = _repositoryEvent.getDummyEvents()
+        viewModelScope.launch {
+            _repositoryEvent.addEvent(event)
+            _events.value = _repositoryEvent.getEvents()
+        }
     }
 
     fun deleteEvent(idx: Int){
@@ -35,11 +35,10 @@ class HomeViewModel(app : Application) : AndroidViewModel(app){
     }
 
     fun toggleCompleted(idx: Int){
-        _repositoryEvent.toggleDummyCompleted(idx)
-        _events.value = _repositoryEvent.getDummyEvents()
-    }
+        viewModelScope.launch {
+            _repositoryEvent.toggleCompleted(_events.value[idx])
+            _events.value = _repositoryEvent.getEvents()
+        }
 
-    fun selectEvent(event: Event){
-        _selectedEvent.value = event
     }
 }
