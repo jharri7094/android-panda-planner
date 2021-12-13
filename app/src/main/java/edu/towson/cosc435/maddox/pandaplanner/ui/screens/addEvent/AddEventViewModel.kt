@@ -11,10 +11,6 @@ import edu.towson.cosc435.maddox.pandaplanner.model.Priority
 
 class AddEventViewModel(app : Application, private val repo : EventsRepository) : AndroidViewModel(app){
 
-
-    private val _errorDialog: MutableState<String> = mutableStateOf("")
-    val errorDialog = _errorDialog
-
     private val _startDate: MutableState<String> = mutableStateOf("")
     val startDate: State<String> = _startDate
 
@@ -90,7 +86,4 @@ class AddEventViewModel(app : Application, private val repo : EventsRepository) 
         _showValidationErrorDialog.value = !_showValidationErrorDialog.value
     }
 
-    fun setErrorDialog(message: String) {
-        _errorDialog.value = message
-    }
 }

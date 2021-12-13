@@ -56,7 +56,7 @@ fun AddEvent(
                 text = "Okay")
             },
             title = { Text(text = "ERROR : Invalid Event") },
-            text = { Text(text = vm.errorDialog.value) }
+            text = { Text(text = "Date and event name fields cannot be blank.") }
         )
     }
     Column(
@@ -189,7 +189,6 @@ fun AddEvent(
                     val event = vm.validate()
                     onAddEvent(event)
                 } catch(e: Exception) {
-                    vm.setErrorDialog(e.toString())
                     vm.toggleShowValidationErrorDialog()
                 }
             },

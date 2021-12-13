@@ -35,13 +35,13 @@ fun Welcome(onClick : ()->Unit){
         }
         Spacer(modifier = Modifier.padding(15.dp))
             //Column for random joke 1
-        Row(modifier = Modifier.fillMaxWidth().padding(top = 10.dp, bottom = 10.dp),
+        Row(modifier = Modifier.fillMaxWidth().padding(20.dp),
             horizontalArrangement = Arrangement.Center) {
                 Text(text = randomMessage1)
             }
         Spacer(modifier = Modifier.padding(15.dp))
             //Column for random joke 2
-        Row(modifier = Modifier.fillMaxWidth().padding(top = 10.dp, bottom = 10.dp),
+        Row(modifier = Modifier.fillMaxWidth().padding(20.dp),
             horizontalArrangement = Arrangement.Center) {
                 Text(text = randomMessage2)
             }
