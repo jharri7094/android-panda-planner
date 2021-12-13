@@ -47,10 +47,26 @@ class HomeViewModel(app : Application, private val repo: IEventsRepository) : An
     }
 
     fun toggleCompleted(idx: Int){
-        _events.value = _events.value.subList(0,idx) + listOf(_events.value[idx].copy(isCompleted = !_events.value[idx].isCompleted)) + _events.value.subList(idx+1,_events.value.lastIndex)
-        viewModelScope.launch {
-            repo.updateEvent(_events.value[idx])
-            reloadEvents()
+        if (_events.value.size==1){
+            _events.value = listOf(_events.value[idx].copy(isCompleted = !_events.value[idx].isCompleted))
+            viewModelScope.launch {
+                repo.updateEvent(_events.value[idx])
+                reloadEvents()
+            }
+            _events.value = listOf()
+        }
+        else {
+            _events.value = _events.value.subList(
+                0,
+                idx
+            ) + listOf(_events.value[idx].copy(isCompleted = !_events.value[idx].isCompleted)) + _events.value.subList(
+                idx + 1,
+                _events.value.lastIndex
+            )
+            viewModelScope.launch {
+                repo.updateEvent(_events.value[idx])
+                reloadEvents()
+            }
         }
     }
 }
