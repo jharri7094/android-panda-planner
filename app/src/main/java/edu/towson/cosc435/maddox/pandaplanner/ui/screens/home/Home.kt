@@ -12,6 +12,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.lifecycle.viewmodel.compose.viewModel
 import edu.towson.cosc435.maddox.pandaplanner.model.Event
 import edu.towson.cosc435.maddox.pandaplanner.model.Priority
+import edu.towson.cosc435.maddox.pandaplanner.ui.components.AddEventFAB
 import edu.towson.cosc435.maddox.pandaplanner.ui.components.EventListView
 import edu.towson.cosc435.maddox.pandaplanner.ui.components.GenericText
 import edu.towson.cosc435.maddox.pandaplanner.ui.components.Header
@@ -33,7 +34,10 @@ fun Home(vm : HomeViewModel,
             isFabVisible = true
         )
         else {
-            GenericText(Text = "No active events to display", fontWeight = FontWeight.W700)
+                GenericText(Text = "No active events to display", fontWeight = FontWeight.W700)
+                AddEventFAB(onClick = { onFabClick() })
+            
+            
         }
     }
 
